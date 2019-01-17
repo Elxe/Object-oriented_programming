@@ -1,26 +1,26 @@
-# 2. 功能分析与建模
+#2.功能分析与建模
 ---
 
-## 2.1 不可变集合（Immutable collections）
+##2.1不可变集合（Immutable_collections）
 
-### 2.1.1 简介
+###2.1.1简介
 
 Immutable collections，顾名思义就是说集合是不可被修改的。集合的数据项是在创建的时候提供，并且在整个生命周期中都不可改变。
 
-### 2.1.2 优势
+###2.1.2优势
 
 1. 不受信任的库可以安全使用。
 2. 线程安全：可以被许多线程使用，没有竞争条件的风险不可变性，可以节省时间和空间。
 3. 所有不可变集合的实现都比其可变的实现占用较少的资源，效率也较高。（可变集合相较于不可变集合有更多的开销，包括并发修改检查，哈希表中的额外空间等）
 4. 可以用作常量使用。 
 
-### 2.1.3 创建方式
+###2.1.3创建方式
 
 * 使用copyOf方法创建，例如：`ImmutableSet.copyOf(set);`
 * 使用of方法，例如：`ImmutableSet.of("a", "b", "c");`
 * 使用Builder，例如：`public static final ImmutableSet<Color> GOOGLE_COLORS = ImmutableSet.<Color>builder().addAll(WEBSAFE_COLORS).add(new Color(0, 191, 255)).build();`
 
-### 2.1.4 示例代码
+###2.1.4示例代码
 
 ```java
 public static final ImmutableSet<String> COLOR_NAMES = ImmutableSet.of (
@@ -48,19 +48,19 @@ class Foo {
 
 这些都是为了在防御式编程风格中保持最小的性能开销。
 
-## 2.2 多集 (Multiset)
+##2.2多集(Multiset)
 
-### 2.2.1 简介
+###2.2.1简介
 
 Multiset，支持添加多个元素。维基百科对multiset的数学定义如下：一般集合的概念是允许相同的元素出现多次，而multiset，类似于集合但与元组相反，是顺序无关的，例如：`{a, a, b}`与`{a, b, a}`这两个multiset是相等的。
 
-### 2.2.2 优势
+###2.2.2优势
 
 普通的集合类在进行相同元素个数统计时，操作显得过于繁琐。Multiset为仅关注元素个数的集合操作提供非常便利的操作方式。Multiset类似于无序的`ArrayList<E>` ，也类似于包含元素与计数的`Map<E, Integer>` 。
 
 另外，`Multiset`与`Collection`接口是完全一致的（除了极少数的情况），所以可以很容易的用Mutiliset代替Collection。
 
-### 2.2.3 实现
+###2.2.3实现
 
 Guava有多个Multiset实现：
 
@@ -72,21 +72,21 @@ Guava有多个Multiset实现：
 | ConcurrentHashMap | ConcurrentHashMultiset |
 | ImmutableMap | ImmutableMultiset |
 
-### 2.2.4 拓展
+###2.2.4拓展
 
 `SortedMultiset`是在`Multiset`接口基础上的一个变体，它支持获取指定范围的子`Multiset`。
 
-## 2.3 Multimap
+##2.3Multimap
 
 ### 2.3.1 简介
 
 Multimap是将元素与任意多个值相关联的一般方法。
 
-### 2.3.2 优势
+###2.3.2优势
 
 Guava的`MultiMap`框架可以让键到多值的映射更加简单。
 
-### 2.3.3 创建方式
+###2.3.3创建方式
 
 值得一提的是一般我们很少会直接使用`MultiMap`接口，更经常的是使用`ListMultiMap`（映射key到List）或`SetMultimap`（映射key到Set）。以下给出这两个类的创建方式：
 
@@ -98,7 +98,7 @@ ListMultimap<String, Integer> treeListMultimap =
  MultimapBuilder.hashKeys().enumSetValues(MyEnum.class).build();
 ```
 
-### 2.3.4 使用情景
+###2.3.4使用情景
 
 从概念上讲，有两种方法可以考虑Multimap：
 
@@ -117,9 +117,9 @@ ListMultimap<String, Integer> treeListMultimap =
     c -> [5]
   ```
 
-## 2.4 BiMap
+##2.4BiMap
 
-### 2.4.1 简介
+###2.4.1简介
 
 BiMap<K, V>是一个值是唯一的双射，允许使用inverse()反转查看BiMap<V, K>。
 
@@ -143,13 +143,13 @@ BiMap<String, Integer> userId = HashBiMap.create();
 String userForId = userId.inverse().get(id);
 ```
 
-### 2.4.2 实现
+###2.4.2实现
 
 支持HashBiMap、ImmutableBiMap、EnumBiMap、EnumHashBiMap。
 
-## 2.5 Table
+##2.5Table
 
-### 2.5.1 简介
+###2.5.1简介
 
 当想要同时以多个key索引时，会使用到`Map<FirstName, Map<LastName, Person>>`这种丑陋的结构。Guava提供了一个新的集合类型 - Table，适用于这种基于“行列”的情景。它有一系列的视图可供使用：
 
@@ -175,9 +175,9 @@ weightedGraph.column(v3); //返回一个映射(v1->20, v2->5)
 * ImmutableTable，由`ImmutableMap<R, ImmutableMap<C, V>>`（ImmutableTable是为稀疏和密集数据集优化的实现）
 * ArrayTable，全部的行列需要在构造的时候指定，当该Table是密集型的时候为了内存和速度的效率，它由二维数组实现的。ArrayTable的实现与其他的实现有些不同，具体参见Javadoc。
 
-## 2.6 RangeSet
+##2.6RangeSet
 
-### 2.6.1 简介 
+###2.6.1简介 
 RangeSet描述了一组断开的、非空的范围集（并集）。当把一个范围添加到一个范围集的时候，所有可连接的范围集（交集）都会合并为一个范围，空集将被忽略。例如：
 
 ```java
@@ -189,7 +189,7 @@ rangeSet.add(Range.openClosed(0, 0)); //空集，{[1, 10], [11, 20)}
 rangeSet。remove(Range.open(5, 10)); //[1, 10]区间被分隔了，{[1, 5], [10, 10], [11, 20]}
 ```
 
-### 2.6.2 视图
+###2.6.2视图
 
 RangeSet实现支持很多范围的视图，包括：
 
@@ -198,9 +198,9 @@ RangeSet实现支持很多范围的视图，包括：
 * `asRanges();`
 * `asSet(DiscreteDomain<C>);`
 
-## 2.7 RangeMap
+##2.7RangeMap
 
-### 2.7.1 简介
+###2.7.1简介
 RangeMap是一组范围集到值的映射，不像RangeSet，RangeMap从来不会合并相邻的映射，即使相邻的范围集映射到相同的值。例如：
 
 ```java
@@ -211,7 +211,7 @@ rangeMap.put(Range.open(10, 20), "foo"); //{[1, 3] - > "foo", (3, 6) -> "bar", [
 rangeMap.remove(Range.closed(5, 11)); //{[1, 3] - > "foo", (3, 5) -> "bar", [11, 20) -> "foo"}
 ```
 
-### 2.7.2 视图
+###2.7.2视图
 
 RangeMap提供了两种视图：
 
