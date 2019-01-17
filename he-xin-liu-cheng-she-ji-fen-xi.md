@@ -1,4 +1,4 @@
-#3.核心流程设计分析
+# 3.核心流程设计分析
 ---
 
 （本来这部分写的内容挺多的，但是文件被还原了，我很难受）
@@ -19,7 +19,7 @@
 
 接下来我们来探究一下这3种方法究竟是怎么运作的。
 
-##3.1of创建方法流程
+## 3.1of创建方法流程
 
 首先，我们看这段代码：
 
@@ -220,7 +220,7 @@ private static final class RegularSetBuilderImpl<E> extends SetBuilderImpl<E> {
 
 此实现尝试检测哈希flood，如果已识别，则回退到`JdkBackedSetBuilderImpl`。
 
-##3.2copyOf创建方法流程
+## 3.2copyOf创建方法流程
 
 copyOf有如下4种实现方式：
 
@@ -279,7 +279,7 @@ public static &lt;E&gt; ImmutableSet&lt;E&gt; copyOf(Iterable<extends E>; elemen
    }
    ```
 
-##3.3Builder创建方法
+## 3.3Builder创建方法
    Builder方法创建的一般方式是将所有的元素通过addall添加到Builer，再通过private SetBuilderImpl<E> impl类的build方法创建。
    ```java
    public static class Builder<E> extends ImmutableCollection.Builder<E> {

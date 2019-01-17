@@ -1,9 +1,9 @@
-#4.高级设计意图分析
+# 4.高级设计意图分析
 ---
 
 此章节分析一下guava集合部分的高级设计意图。
 
-##4.1抽象工厂
+## 4.1抽象工厂
 
 首先介绍一下guava集合里使用的抽象工厂：
 
@@ -80,7 +80,7 @@ public interface Iterator<E> {
     }
 ```
 
-##4.2建造者模式（Builder）
+## 4.2建造者模式（Builder）
 
 关于建造者模式其实在上一章介绍创建流程时已经有所涉及，这里再进行深入分析。
 
@@ -139,7 +139,7 @@ public interface Iterator<E> {
 在集合元素个数不确定的情况下，builder设计模式很好地解决了创建时的尴尬，并使代码变得更加简洁。
 
 
-##4.3适配器模式
+## 4.3适配器模式
 
 ![](/assets/13F9.png)
 其中`public abstract class ImmutableCollection<E> extends AbstractCollection<E> implements Serializable`的`ImmutableCollection`继承`AbstractCollection`类，并实现接口`Serializable`；`public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements Set<E>`的`ImmutableSet`继承`ImmutableCollection`类，并实现接口`Set`。
